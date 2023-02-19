@@ -32,7 +32,8 @@ app.run(port=9000, debug=True)
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
-app.run(port=9000, debug=False)
+if __name__ == "__main__":
+     app.run(port=9000, debug=False)
 ```
 
 5. When running, you will get a message on notebooks
