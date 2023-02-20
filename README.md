@@ -33,7 +33,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 if __name__ == "__main__":
-     app.run(port=9000, debug=False)
+     app.run(port=9000, debug=True)
 ```
 
 5. When running, you will get a message on notebooks
