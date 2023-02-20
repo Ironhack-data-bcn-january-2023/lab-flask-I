@@ -12,4 +12,4 @@ def random_int ():
     return str(random.randint(0,10))
 
 if __name__ == '__main__':
-    app.run(port = 9000, debug = False)
+    app.run(port = 9000, debug = True)
