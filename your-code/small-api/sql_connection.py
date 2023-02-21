@@ -14,3 +14,12 @@ connectionData=f"mysql+pymysql://root:{password}@localhost/{dbName}"
 engine = alch.create_engine(connectionData)
 
 
+
+
+def insert_params (id_, date, name, fname, gender, date_2):
+    query = f"""
+    INSERT INTO employees
+    VALUES ("{id_}", "{date}", "{name}", "{fname}", "{gender}", "{date_2}");
+    """
+    engine.execute(query)
+
