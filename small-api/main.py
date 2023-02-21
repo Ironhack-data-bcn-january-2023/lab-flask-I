@@ -21,9 +21,17 @@ def example():
 def table_ten(table):
     return jsonify(sql.tbl_tn(table))
 
+@app.route("/insert-into-employees", methods=["POST"])
+def insert_params_():
+    emp_no = request.args['emp_no']
+    birth_date = request.args['birth_date']
+    first_name =request.args['first_name']
+    last_name =request.args ['last_name']
+    gender =request.args ['gender']
+    hire_date = request.args['hire_date']
+    
+    sql.insert_params (emp_no, birth_date, first_name, last_name, gender, hire_date)
+    return "Inserted!"
+
 if __name__ == "__main__":
-     app.run(port=7070, debug=False)
-
-
-
-
+     app.run(port=7070, debug=True)
