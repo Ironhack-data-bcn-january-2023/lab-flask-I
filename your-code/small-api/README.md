@@ -2,86 +2,17 @@
 
 ## Introduction
 
-On this lab, you will create your very first own API using Flask. You'll lern how to set up a server, stop it, and abstract your code by using endpoints.
+On this lab, you will continue working on the API you created on the previous lab. On this lab, you will create a connection to a MySQL database.
+
+The goal is to have this workflow:
+
+Browser endpoints < function defined under endpoint < function that queries < function that establishes connection
+
+This way, we will manage to run SQL queries by just passing one word/one endpoint.
 
 ### Iteration 1
 
-Start a server. For you to be able to do that, go to `your-code/main.ipynb` and on a notebook cell, you'll have to:
-
-1. Import the necessary modules in Flask:
-
-```python
-from flask import Flask, request, jsonify
-```
-
-2. Initialize the Flask app:
-
-```python
-app = Flask(__name__)
-```
-
-3. Make sure you start the app:
-
-```python
-app.run(port=9000, debug=True)
-```
-
-4. Your notebook cell should look like this:
-
-```python
-from flask import Flask, request, jsonify
-app = Flask(__name__)
-
-if __name__ == "__main__":
-     app.run(port=9000, debug=False)
-```
-
-5. When running, you will get a message on notebooks
-
-```markdown
-- Serving Flask app '**main**' (lazy loading)
-- Environment: production
-  WARNING: This is a development server. Do not use it in a production deployment.
-  Use a production WSGI server instead.
-- Debug mode: on
-```
-
-Also, you'll get: ` * Running on http://127.0.0.1:9000 (Press CTRL+C to quit)`. Click the link to open that adress on the browser.
-
-### Iteration 2
-
-Create an endpoint that returns "Hello world!". For that, you'll need two things:
-1 - The endopint
-
-```python
-@app.route("/")
-```
-
-2 - The function used by that endpoint
-
-```python
-def hello_world():
-    return "Hello world!"
-```
-
-Include these two pieces of code between the code generated on iterations 2 and 3.
-
-Make sure your code is still running and go to your browser and refresh. You should see "Hello world!".
-
-### Iteration 3
-
-Create an endpoint that returns a random number from 0 to 10.
-
-- Endpoint: "/random-number"
-- Function: def random_int
-- Result: a stringified int
-
-### Iteration 4
-
-Run this on VSCode
-
-- Stop your jupyter notebook
-- Create a directory within your lab so that it has this structure:
+Copy the API you created. It should look like this:
 
 ```bash
 your-code/
@@ -97,11 +28,63 @@ small-api/
         sql_queries.py #for now empty
 ```
 
-- Copy your code from your jupyter notebook into your `main.py`
 - From your terminal, run `python main.py`
 - In that terminal, you'll get feedback of your prints and the errors.
 - After the server is up and running you'll be able to go into your browser and access the endpoints you defined.
 
+### Iteration 2
+
+Now, we are going to work with data: we'll establish a connection to the database.
+
+1. Go to your `config/sql_connection.py` file.
+2. Establish a connection to MySQL.
+   - Import the necessary libraries (SQL alchemy)
+   - Use `python-dotenv` & `.env` to load your password.
+   - Remember to include your `.env` file in your `.gitignore`.
+   - Define the database you want to connect to (let's go with employees)
+   - Define an engine :)
+
+### Iteration 3
+
+Now, we want to make sure we can use the engine we defined.
+
+- 1. Go to `tools/sql_queries.py` and import the engine.
+- 2. Import the necessary libraries
+- 3. Define a function that:
+  - is called `get_everything()`
+  - takes no arguments
+  - selects everything from the table salaries with a limit of 10 and saves it into a df
+  - returns the [df as a dict](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_dict.html) (mind orient argument).
+
+### Iteration 4
+
+Now, we'll make that function available on the main file.
+
+1. Go to `main.py`
+2. Import your sql_queries as sql
+3. Create a route with the name `"/everything-employees"`
+4. Under that route, define a function with the name `example`
+5. The function `example` should defined on iteration 3: `sql.get_everything()`
+6. Make sure you jsonify the return of that function
+7. Check it works: go to your browser, go to the `"/everything-employees"` endpoint and see if you get the result: you should get a stringified version of a dictionary of 10 elements.
+
+### Iteration 5
+
+Now we'll create an endpoint that has parameters. Create a query that selects 10 elements for any given table.
+
+1. On your `tools/sql_queries.py` define a function that takes one argument. That function should run a query that selects 10 elements from any table in your database. Call it `table_ten()`
+2. On your `main.py`
+3. Create an route: `table/<one_table>`
+4. Under that route, create a function that returns a stringified version of calling table_ten(one_table).
+
+### BONUS
+
+Repeat the same process to connect to mongo.
+
 ## Submission
 
 Upon completion, add your deliverables to git. Then commit git and push your branch to the remote.
+
+## Resources
+
+[]()
