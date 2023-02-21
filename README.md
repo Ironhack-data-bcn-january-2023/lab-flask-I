@@ -23,8 +23,8 @@ app = Flask(__name__)
 3. Make sure you start the app:
 
 ```python
-app.run(port=9000, debug=True)
-```
+
+```app.run(port=9000, debug=True)
 
 4. Your notebook cell should look like this:
 
